@@ -6,7 +6,7 @@ namespace CatalogoCursos
 {
     class Program
     {
-        // Datos de ejemplo (3–5 registros)
+        // Lista estática de cursos con id, nombre y área
         static List<(int id, string name, string area)> Courses = new()
         {
             (1, "Algoritmos I", "CS"),
@@ -18,6 +18,7 @@ namespace CatalogoCursos
 
         static void Main()
         {
+            // Configura el título y color de la consola
             Console.Title = "Catálogo de Cursos - Mini App";
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("=======================================");
@@ -27,6 +28,7 @@ namespace CatalogoCursos
 
             bool salir = false;
 
+            // Menú principal
             while (!salir)
             {
                 Console.WriteLine("Seleccione una opción:");
@@ -38,19 +40,20 @@ namespace CatalogoCursos
                 string? opcion = Console.ReadLine();
                 Console.WriteLine();
 
+                // Control del menú
                 switch (opcion)
                 {
                     case "1":
-                        ListarCursos();
+                        ListarCursos();      // Muestra todos los cursos
                         break;
                     case "2":
-                        BuscarCurso();
+                        BuscarCurso();       // Permite buscar por texto
                         break;
                     case "3":
-                        PaginarCursos();
+                        PaginarCursos();     // Muestra los cursos por páginas
                         break;
                     case "4":
-                        salir = true;
+                        salir = true;        // Sale del programa
                         Console.WriteLine("Saliendo del catálogo...");
                         break;
                     default:
@@ -59,6 +62,8 @@ namespace CatalogoCursos
                 }
             }
         }
+
+        // Muestra todos los cursos disponibles
         static void ListarCursos()
         {
             Console.WriteLine("=== Lista de Cursos ===");
@@ -66,10 +71,14 @@ namespace CatalogoCursos
                 Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
             Console.WriteLine();
         }
+
+        // Permite buscar cursos por nombre
         static void BuscarCurso()
         {
             Console.Write("Ingrese texto para buscar: ");
             var q = Console.ReadLine() ?? "";
+
+            // Filtra cursos que contengan el texto ingresado (sin importar mayúsculas/minúsculas)
             var results = Courses
                 .Where(c => c.name.Contains(q, StringComparison.OrdinalIgnoreCase))
                 .ToList();
@@ -81,14 +90,16 @@ namespace CatalogoCursos
                 return;
             }
 
+            // Muestra los resultados encontrados
             foreach (var c in results)
                 Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
             Console.WriteLine();
         }
 
+        // Simula una paginación simple de los cursos
         static void PaginarCursos()
         {
-            const int pageSize = 2;
+            const int pageSize = 2; // Cantidad de cursos por página
             int totalPages = (int)Math.Ceiling((double)Courses.Count / pageSize);
             int page = 1;
             string? input;
@@ -96,6 +107,8 @@ namespace CatalogoCursos
             do
             {
                 Console.WriteLine($"\n=== Página {page} de {totalPages} ===");
+
+                // Muestra solo los cursos de la página actual
                 var items = Courses
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
@@ -104,6 +117,7 @@ namespace CatalogoCursos
                 foreach (var c in items)
                     Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
 
+                // Navegación entre páginas
                 Console.WriteLine("\n[n] Siguiente | [p] Anterior | [q] Salir");
                 Console.Write("Opción: ");
                 input = Console.ReadLine();

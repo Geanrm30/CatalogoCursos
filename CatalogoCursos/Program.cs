@@ -86,5 +86,36 @@ namespace CatalogoCursos
             Console.WriteLine();
         }
 
+        static void PaginarCursos()
+        {
+            const int pageSize = 2;
+            int totalPages = (int)Math.Ceiling((double)Courses.Count / pageSize);
+            int page = 1;
+            string? input;
+
+            do
+            {
+                Console.WriteLine($"\n=== Página {page} de {totalPages} ===");
+                var items = Courses
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                foreach (var c in items)
+                    Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
+
+                Console.WriteLine("\n[n] Siguiente | [p] Anterior | [q] Salir");
+                Console.Write("Opción: ");
+                input = Console.ReadLine();
+
+                if (input == "n" && page < totalPages) page++;
+                else if (input == "p" && page > 1) page--;
+                else if (input != "q" && input != "")
+                    Console.WriteLine("Comando no válido.\n");
+
+            } while (input != "q");
+
+            Console.WriteLine();
+        }
     }
 }

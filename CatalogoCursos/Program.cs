@@ -66,6 +66,25 @@ namespace CatalogoCursos
                 Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
             Console.WriteLine();
         }
+        static void BuscarCurso()
+        {
+            Console.Write("Ingrese texto para buscar: ");
+            var q = Console.ReadLine() ?? "";
+            var results = Courses
+                .Where(c => c.name.Contains(q, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            Console.WriteLine($"\nResultados para \"{q}\":");
+            if (results.Count == 0)
+            {
+                Console.WriteLine("No se encontraron cursos.\n");
+                return;
+            }
+
+            foreach (var c in results)
+                Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
+            Console.WriteLine();
+        }
 
     }
 }

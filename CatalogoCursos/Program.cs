@@ -99,6 +99,7 @@ namespace CatalogoCursos
         // Simula una paginación simple de los cursos
         static void PaginarCursos()
         {
+            // Generado con ayuda de GitHub Copilot: estructura base del método y variables iniciales
             const int pageSize = 2; // Cantidad de cursos por página
             int totalPages = (int)Math.Ceiling((double)Courses.Count / pageSize);
             int page = 1;
@@ -106,22 +107,25 @@ namespace CatalogoCursos
 
             do
             {
+                // Generado con ayuda de GitHub Copilot: impresión del encabezado de página
                 Console.WriteLine($"\n=== Página {page} de {totalPages} ===");
 
-                // Muestra solo los cursos de la página actual
+                // Generado con ayuda de GitHub Copilot: uso de Skip y Take para paginación
                 var items = Courses
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
 
+                // Revisado manualmente: formato de salida de cursos
                 foreach (var c in items)
                     Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
 
-                // Navegación entre páginas
+                // Generado con ayuda de GitHub Copilot: menú de navegación (n/p/q)
                 Console.WriteLine("\n[n] Siguiente | [p] Anterior | [q] Salir");
                 Console.Write("Opción: ");
                 input = Console.ReadLine();
 
+                // Revisado manualmente: control de flujo y validación de entrada
                 if (input == "n" && page < totalPages) page++;
                 else if (input == "p" && page > 1) page--;
                 else if (input != "q" && input != "")
@@ -129,7 +133,9 @@ namespace CatalogoCursos
 
             } while (input != "q");
 
+            // Revisado manualmente: salto de línea final para claridad visual
             Console.WriteLine();
         }
+
     }
 }

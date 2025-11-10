@@ -59,6 +59,13 @@ namespace CatalogoCursos
                 }
             }
         }
+        static void ListarCursos()
+        {
+            Console.WriteLine("=== Lista de Cursos ===");
+            foreach (var c in Courses)
+                Console.WriteLine($"[{c.id}] {c.name} - {c.area}");
+            Console.WriteLine();
+        }
 
     }
 }
